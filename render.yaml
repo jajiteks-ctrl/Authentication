@@ -2,20 +2,14 @@ services:
   - type: web
     name: django-jwt-api
     env: python
-    rootDir: backend                # manage.py is inside 'backend'
+    rootDir: backend
     buildCommand: |
-      pip install -r requirements.txt
+      pip install -r ../requirements.txt
       python manage.py collectstatic --noinput
       python manage.py migrate
-    startCommand: gunicorn backend.backend.wsgi:application
+    startCommand: gunicorn backend.wsgi:application
     envVars:
-      - key: DEBUG
-        value: True
-      - key: SECRET_KEY
-        value: mytestkey123
-      - key: ALLOWED_HOSTS
-        value: .onrender.com
-      - key: DATABASE_URL
-        value: sqlite:///db.sqlite3
-      - key: PYTHON_VERSION
-        value: 3.11.9
+      - key: DJANGO_SETTINGS_MODULE
+        value: backend.settings
+      - key: PYTHONUNBUFFERED
+        value: true

@@ -2,14 +2,17 @@ services:
   - type: web
     name: django-jwt-api
     env: python
-    rootDir: backend
+    rootDir: backend                   # 👈 where manage.py is located
     buildCommand: |
       pip install -r ../requirements.txt
       python manage.py collectstatic --noinput
       python manage.py migrate
     startCommand: gunicorn backend.wsgi:application
+
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
       - key: DJANGO_SETTINGS_MODULE
         value: backend.settings
-      - key: PYTHONUNBUFFERED
-        value: true
+      - key: PORT
+        value: 8000

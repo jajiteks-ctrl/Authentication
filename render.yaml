@@ -2,12 +2,12 @@ services:
   - type: web
     name: django-jwt-api
     env: python
-    rootDir: backend            # 🔴 VERY IMPORTANT → tells Render manage.py is inside backend/
+    rootDir: backend            # manage.py is inside 'backend'
     buildCommand: |
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
       python manage.py migrate
-    startCommand: gunicorn backend.wsgi:application
+    startCommand: gunicorn backend.backend.wsgi:application
     envVars:
       - key: DEBUG
         value: False

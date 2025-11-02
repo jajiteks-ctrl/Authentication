@@ -32,4 +32,22 @@ class ProfileSerialier(serializers.ModelSerializer):
         fields = ['bio',' profile_pic','designation']
         
     
+
+from app.models import Recipe
     
+class ReceipeSerializer(serializers.ModelSerializer):
+    author = serializers.CharField( read_only=True)
+    class Meta :
+        model = Recipe
+        fields = "__all__"
+        read_only_fields = ["author", "created_at", "updated_at"]
+    
+from app.models import Ratings
+
+class RatingSerializers(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only =True)
+    
+    class Meta:
+        model = Ratings
+        fields = ['id','user','recipe','rating_value']
+        read_only_fields = ['user']  # user is set automatically from request

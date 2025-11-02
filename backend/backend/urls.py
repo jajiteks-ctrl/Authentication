@@ -23,12 +23,24 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from app.views import RegisterView,ProfileView
+from app.views import RegisterView,ProfileView,PostReceipeView,GetallReceipeView,RatingView,GetallRatings,GetSingleRatings,EditRecipe,DeleteRecipe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("register",RegisterView.as_view()),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('profile/',ProfileView.as_view())
+    path('profile/',ProfileView.as_view()),
+    
+    
+    path('post-recipe/',PostReceipeView.as_view()),
+    path('get-all-recipe/',GetallReceipeView.as_view()),
+    path('edit-recipe/<int:id>/',EditRecipe.as_view()),
+    path('delete-recipe/<int:id>/',DeleteRecipe.as_view()),
+    
+    
+    path('ratings/',RatingView.as_view()),
+    path('get-all-ratings/',GetallRatings.as_view()),
+    path('get-single-rating/<int:id>/',GetSingleRatings.as_view())
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

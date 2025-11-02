@@ -38,3 +38,70 @@ class ProfileView(generics.RetrieveAPIView):
             "profile_pic": profile.profile_pic.url if profile.profile_pic else None,  # Handling optional profile_pic
             "Designation": profile.Designation
         })
+
+from app.models import Recipe
+from app.serializers import ReceipeSerializer
+
+class PostReceipeView(generics.CreateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = ReceipeSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+    
+class GetallReceipeView(generics.ListAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = ReceipeSerializer
+    permission_classes = [IsAuthenticated]
+    
+    
+    
+class GetSingleReceipeView(generics.RetrieveAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = ReceipeSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+    
+    
+class EditRecipe(generics.UpdateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = ReceipeSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+    
+class DeleteRecipe(generics.DestroyAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = ReceipeSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+    
+    
+    
+from app.serializers import RatingSerializers
+from app.models import Ratings
+
+class RatingView(generics.CreateAPIView):
+    queryset = Ratings.objects.all()
+    serializer_class = RatingSerializers
+    permission_classes = [IsAuthenticated]
+       
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user )
+        
+        
+class GetallRatings(generics.ListAPIView):
+    queryset = Ratings.objects.all()
+    serializer_class = RatingSerializers
+    permission_classes = [IsAuthenticated]
+    
+class GetSingleRatings(generics.RetrieveAPIView):
+    queryset = Ratings.objects.all()
+    serializer_class = RatingSerializers
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+    
+    
+
+    
+    
